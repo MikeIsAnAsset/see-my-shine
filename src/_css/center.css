@@ -1,0 +1,13 @@
+.centering {
+    margin: 0 auto;
+}
+
+.logo {
+    margin-top: 15px;
+    padding-right: 50px;
+}
+
+.customPad {
+    margin-top: 200px;
+    color: white;
+}
