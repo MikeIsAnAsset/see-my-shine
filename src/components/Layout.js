@@ -8,6 +8,7 @@ import SearchContainer from './../components/SearchContainer';
 import Join from './../components/Join';
 import SignUp from './SignUp';
 import UserWelcome from './../components/UserWelcome';
+import AddJobSeekerProfile from './../components/AddJobSeekerProfile';
 
 class Layout extends Component {
 
@@ -20,6 +21,7 @@ class Layout extends Component {
         this.setState({
             loggedInUser: user
         })
+        console.log('user should be set')
     }
 
     render() {
@@ -28,31 +30,33 @@ class Layout extends Component {
             <React.Fragment>
                 <Route exact path="/" component={Home} />
                 <Route exact path="/SearchContainer" component={SearchContainer} />
-                <Route exact path='/UserWelcome' component={UserWelcome} />
+
+                <Route exact path='/SignUp' component={SignUp} />
                 {/* <Route exact path="/Join" component={Join} /> */}
-                <Route exact path="/SignUp" component={SignUp} />
+
             </React.Fragment>
 
         )
-        // if (this.state.loggedInUser) {
-        //     routes = (
-        //         <React.Fragment>
-        //             <Route exact path="/" component={Home} />
-        //             <Route exact path="/SearchContainer" component={SearchContainer} />
-        //             <Route exact path='/UserWelcome' component={UserWelcome} />
-        //             {/* <Route exact path="/about-us" component={AboutUs} />
-        //             <Route exact path="/" component={Home} /> */}
-        //             {/* <Route exact path="/settings" component={Settings} /> */}
-        //         </React.Fragment>
-        //     )
-        // }
+        if (this.state.loggedInUser !== null) {
+            routes = (
+                <React.Fragment>
+                    <SearchContainer ></SearchContainer>
+                    <Route exact path="/" component={Home} />
+                    <Route exact path="/SearchContainer" component={SearchContainer} />
+                    <Route exact path='/UserWelcome' component={UserWelcome} />
+                    {/* <Route exact path="/about-us" component={AboutUs} />
+                    <Route exact path="/" component={Home} /> */}
+                    {/* <Route exact path="/settings" component={Settings} /> */}
+                </React.Fragment>
+            )
+        }
         const signup = <SignUp loggedInUser={this.state.loggedInUser} setLoggedInUser={this.setLoggedInUser}></SignUp>
 
         return (
             <React.Fragment>
 
                 <Header loggedInUser={this.state.loggedInUser} setLoggedInUser={this.setLoggedInUser}></Header>
-
+                <SignUp loggedInUser={this.state.loggedInUser} setLoggedInUser={this.setLoggedInUser}></SignUp>
                 {routes}
             </React.Fragment>
         );

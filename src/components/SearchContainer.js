@@ -15,8 +15,8 @@ class SearchContainer extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      checkboxLabelsAndValues: [],
-      selectedCheckboxes: [],
+      checkboxLabelsAndValues: [{'Brett:':false}],
+      selectedCheckboxes: false,
       jobsMatchingSkillSearch: []
     };
     this.handleSelectedSkillCheckboxes = this.handleSelectedSkillCheckboxes.bind(this);
@@ -87,13 +87,13 @@ class SearchContainer extends React.PureComponent {
             </Panel.Heading>
             <Panel.Collapse>
               <Panel.Body>
-                {/* <CheckboxGroup>
+                <CheckboxGroup
                   title={'Data Analytics'}
                   setName={'Skills'}
                   controlFunc={this.handleSelectedSkillCheckboxes}
                   type={'checkbox'}
                   checkboxLabelsAndValues={this.state.checkboxLabelsAndValues}
-                  selectedCheckboxes={this.state.selectedCheckboxes} </CheckboxGroup> */}
+                  selectedCheckboxes={this.state.selectedCheckboxes} />
                   
                 <input type='checkbox' name='anotherTest' /><label for='anotherTest'>   Another Test</label>
 

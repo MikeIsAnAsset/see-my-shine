@@ -3,7 +3,7 @@ import { Route, Link } from 'react-router-dom';
 import axios from 'axios';
 // import '../../_css/normalize.css';
 import '../_css/base.css';
-import UserWelcome from './UserWelcome';
+import SignUp from './SignUp';
 // import '../../_css/font-awesome.css';
 
 
@@ -23,7 +23,8 @@ class Header extends Component {
         axios.post('http://localhost:8080/login', user)
             .then(response => {
                 const loggedInUserFromBackEndSystem = response.data;
-                this.props.setLoggedInUser(loggedInUserFromBackEndSystem);
+                // this.props.setLoggedInUser(loggedInUserFromBackEndSystem);
+                console.log(loggedInUserFromBackEndSystem);
             }).catch(error => {
                 // add logic for displaying user name or password is invalid
             })
@@ -44,7 +45,7 @@ class Header extends Component {
 
         let links = null;
         let searchBarOrSignInField = null;
-        if (this.props.loggedInUser) {
+        if (this.props.loggedInUser !== null) {
             searchBarOrSignInField = (
                 < form className="form-inline mt-2 mt-md-0" >
                     <input className="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" />
@@ -60,7 +61,7 @@ class Header extends Component {
                     </li>
                     <br />{"      "}
                     <li className="nav-item">
-                        <Link className="nav-link" to="/SearchContainer">Search jobs & companies</Link>
+                        <Link className="nav-link" to="/SearchContainer">I am logged IN!!!!!</Link>
                     </li>
                     <li className="nav-item">
                         <Link className="nav-link" to="/settings">Settings</Link>
@@ -104,7 +105,7 @@ class Header extends Component {
                     </li>
                     <li className="nav-item">
                         {/* <Link className="navbar navlink-space" onClick={this.showModal} to="/SignUp" data-toggle="modal" data-target="#exampleModalCenter">SIGNUP</Link> */}
-                        <Link className="navbar navlink-space" to="/UserWelcome" component={UserWelcome} >SIGNUP</Link>
+                        <Link className="navbar navlink-space" to="/SignUp" component={SignUp} >SIGNUP</Link>
 
                     </li>
        

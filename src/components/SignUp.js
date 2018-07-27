@@ -81,7 +81,8 @@ class SignUp extends Component {
                     console.log("user was created")
                     const loggedInUserFromBackEndSystem = response.data;
                     this.props.setLoggedInUser(loggedInUserFromBackEndSystem);
-                    console.log(loggedInUserFromBackEndSystem);
+                    console.log('You SHOULD see something!')
+                               console.log(loggedInUserFromBackEndSystem);
                 }).catch(error => {
                     // add logic for displaying user name or password is invalid
                     console.log("this was an error");
@@ -90,14 +91,14 @@ class SignUp extends Component {
             // <Route path='/UserWelcome' exact component={UserWelcome}/>
 
 
-            if (this.props.loggedInUser) {
-                { this.renderRedirect() }
-            }
+            // if (this.props.loggedInUser) {
+            //     { this.renderRedirect() }
+            // }
 
 
-            //     // <Redirect to="/UserWelcome.js" />
-            <div onClick={this.props.history.push('/UserWelcome.js')}>
-            </div>
+            // //     // <Redirect to="/UserWelcome.js" />
+            // <div onClick={this.props.history.push('/UserWelcome.js')}>
+            // </div>
             
 
 
@@ -137,7 +138,7 @@ class SignUp extends Component {
                 <br />
                 <br />
                 <br />
-                <form onSubmit={this.signUpSubmitHandler} class="container" style={{ marginTop: "150" }}>
+                <form onSubmit={this.signUpSubmitHandler.bind(this)} class="container" style={{ marginTop: "150" }}>
 
                     {errors.map(error => (<p key={error}>Error: {error}</p>))}
                     <div className="form-row">
