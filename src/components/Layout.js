@@ -7,6 +7,7 @@ import Home from './../components/Home';
 import SearchContainer from './../components/SearchContainer';
 import Join from './../components/Join';
 import SignUp from './SignUp';
+import LoggedInBridge from './LoggedInBridge';
 import UserWelcome from './../components/UserWelcome';
 import AddJobSeekerProfile from './../components/AddJobSeekerProfile';
 
@@ -30,7 +31,7 @@ class Layout extends Component {
             <React.Fragment>
                 <Route exact path="/" component={Home} />
                 <Route exact path="/SearchContainer" component={SearchContainer} />
-
+                {/* <Route exact path="/NewsEvents" component={NewsEventsContainer} /> */}
                 <Route exact path='/SignUp' component={SignUp} />
                 {/* <Route exact path="/Join" component={Join} /> */}
 
@@ -50,14 +51,15 @@ class Layout extends Component {
                 </React.Fragment>
             )
         }
-        const signup = <SignUp loggedInUser={this.state.loggedInUser} setLoggedInUser={this.setLoggedInUser}></SignUp>
-
+        // const signup = <SignUp loggedInUser={this.state.loggedInUser} setLoggedInUser={this.setLoggedInUser}></SignUp>
+        
         return (
             <React.Fragment>
 
                 <Header loggedInUser={this.state.loggedInUser} setLoggedInUser={this.setLoggedInUser}></Header>
-                <SignUp loggedInUser={this.state.loggedInUser} setLoggedInUser={this.setLoggedInUser}></SignUp>
+                {/* <LoggedInBridge loggedInUser={this.state.loggedInUser} setLoggedInUser={this.setLoggedInUser}></LoggedInBridge> */}
                 {routes}
+                
             </React.Fragment>
         );
     }

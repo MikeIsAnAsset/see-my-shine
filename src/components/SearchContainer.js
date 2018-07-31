@@ -15,14 +15,26 @@ class SearchContainer extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      checkboxLabelsAndValues: [{'Brett:':false}],
-      selectedCheckboxes: false,
+      skillObject: {},
+      selectedCheckboxes: [],
       jobsMatchingSkillSearch: []
     };
-    this.handleSelectedSkillCheckboxes = this.handleSelectedSkillCheckboxes.bind(this);
+    this.handleSelectedSkillCheckbox = this.handleSelectedSkillCheckbox.bind(this);
   }
 
-    
+  getSkillObject() {
+    axios.get('http://localhost:8080/getSkillObject')
+      .then(response => {
+        const skillObject = response.data;
+        this.setState({
+          skillObject: skillObject
+        })
+        console.log("skillObject successful")
+      }).catch(error => {
+        // add logic for displaying no search
+        console.log("skillObject error");
+      })
+  }
 
 
   fetchAllSkills() {
@@ -30,7 +42,7 @@ class SearchContainer extends React.PureComponent {
       .then(response => {
         const allSkillsFromBackend = response.data;
         this.setState({
-          checkboxLabelsAndValues: allSkillsFromBackend
+          skilllObject: allSkillsFromBackend
         })
         console.log("search successful")
       }).catch(error => {
@@ -49,109 +61,150 @@ class SearchContainer extends React.PureComponent {
       })
   }
 
-  handleSelectedSkillCheckboxes(e) {
-    const selection = e.target.value;  // if this is a boolean value, how will the below if statement work using selection as parameter?
-    let newSelectionArray;
+  handleSelectedSkillCheckbox(e) {
+    const selection = e.target.name;  // if this is a boolean value, how will the below if statement work using selection as parameter?
+    let checkboxName=null;
+    let key=null;
+    
+    return 
+   
+    (this.skillObject.keys(checkboxName).map((checkbox, i) => {
+       key = { i }
+      // if (selection === {i}){}
+      if (selection === checkbox.name) {
+        if (selection.value === checkbox.value) {
+          if (checkbox.value ? true : false) {
+            this.setState({checkbox: false})
+            console.log({checkbox})
+           }
+          else {
+            (checkbox.value ? false : true)
+            this.setState({skillObject: checkbox.value})
+          }
+        }
+        else {
+          (selection.value !== checkbox.value)
+        }
+        if (checkbox.value ? true : false) {
+          this.setState({skillObject: checkbox.value})
+         }
+        else {
+          (checkbox.value ? false : true)
+          this.setState({skillObject: checkbox.value})
+        }
+       
+      }
+    })
+  
+       
+  
 
-    if (this.state.selectedCheckboxes.indexOf(selection) > -1) {
-      newSelectionArray = this.state.selectedCheckboxes.filter(s => s !== selection)
-    } else {
-      newSelectionArray = [...this.state.selectedCheckboxes, selection];
-    }
-
-    this.setState({ checkboxLabelsAndValues: newSelectionArray });
-  }
-
-  // handleFormSubmit()
 
 
 
 
 
 
-  render() {
+    // if (this.state.selectedCheckboxes.indexOf(selection) > -1) {
+    //   newSelectionArray = this.state.selectedCheckboxes.filter(s => s !== selection)
+    // } else {
+    //   newSelectionArray = [...this.state.selectedCheckboxes, selection];
+    // }
 
-    console.log(this.state.checkboxLabelsAndValues) 
-    // console.log(JSON.stringify(this.state.test, null, 2))
+    // this.setState({ skilllObject: newSelectionArray });
+  
 
-    return (
+// handleFormSubmit()
 
-      <div style={{ marginTop: 90 }} className='jumbotron'>
-        <h2>Search jobs and companies</h2>
-        <form action="/action_page.php" className="container" onSubmit={this.handleFormSubmit}>
-          <Panel className="centering" id="collapsible-panel-example-2" defaultCollapsed style={{ width: "80%" }} bsStyle="primary">
-            <Panel.Heading >
-              <Panel.Title toggle >
-                Data and Analytics
+
+
+
+
+    )}
+render() {
+  this.getSkillObject();
+  console.log(this.state.skilllObject)
+  // console.log(JSON.stringify(this.state.test, null, 2))
+
+  return (
+
+    <div style={{ marginTop: 90 }} className='jumbotron'>
+      <h2>Search jobs and companies</h2>
+      <form action="/action_page.php" className="container" onSubmit={this.handleFormSubmit}>
+        <Panel className="centering" id="collapsible-panel-example-2" defaultCollapsed style={{ width: "80%" }} bsStyle="primary">
+          <Panel.Heading >
+            <Panel.Title toggle >
+              Data and Analytics
             </Panel.Title>
-            </Panel.Heading>
-            <Panel.Collapse>
-              <Panel.Body>
-                <CheckboxGroup
+          </Panel.Heading>
+          <Panel.Collapse>
+            <Panel.Body>
+              <CheckboxGroup
                   title={'Data Analytics'}
                   setName={'Skills'}
-                  controlFunc={this.handleSelectedSkillCheckboxes}
+                  controlFunc={this.handleSelectedSkillCheckbox}
                   type={'checkbox'}
-                  checkboxLabelsAndValues={this.state.checkboxLabelsAndValues}
-                  selectedCheckboxes={this.state.selectedCheckboxes} />
-                  
-                <input type='checkbox' name='anotherTest' /><label for='anotherTest'>   Another Test</label>
+                  skilllObject={this.state.skilllObject} />
+
+                  // selectedCheckboxes={this.state.selectedCheckboxes} /> 
+
+              <input type='checkbox' name='anotherTest' /><label for='anotherTest'>   Another Test</label>
 
 
-                <FormGroup>
+              <FormGroup>
 
-                  <Checkbox inline name='biz' value='biz' id='55' checkked>Business Intelligence</Checkbox> <Checkbox inline>Data Mining</Checkbox>{' '}
-                  <Checkbox inline>Data Science</Checkbox>
+                <Checkbox inline name='biz' value='biz' id='55' checkked>Business Intelligence</Checkbox> <Checkbox inline>Data Mining</Checkbox>{' '}
+                <Checkbox inline>Data Science</Checkbox>
 
-                  <Checkbox inputRef={ref => { this.input = ref; }} inline >.NET </Checkbox>
+                <Checkbox inputRef={ref => { this.input = ref; }} inline >.NET </Checkbox>
 
-                  {/* onChange={this.handleSelectedSkillCheckboxes.bind(this)} */}
+                {/* onChange={this.handleSelectedSkillCheckboxes.bind(this)} */}
 
-                </FormGroup>
-
-
-              </Panel.Body>
-            </Panel.Collapse>
-          </Panel>
+              </FormGroup>
 
 
+            </Panel.Body>
+          </Panel.Collapse>
+        </Panel>
 
-          <Panel id="collapsible-panel-example-2" className="centering" defaultCollapsed bsStyle="success" style={{ width: "80%" }}>
-            <Panel.Heading>
-              <Panel.Title toggle>
-                Data and Analytics
+
+
+        <Panel id="collapsible-panel-example-2" className="centering" defaultCollapsed bsStyle="success" style={{ width: "80%" }}>
+          <Panel.Heading>
+            <Panel.Title toggle>
+              Data and Analytics
             </Panel.Title>
-            </Panel.Heading>
-            <Panel.Collapse>
-              <Panel.Body>
+          </Panel.Heading>
+          <Panel.Collapse>
+            <Panel.Body>
 
 
-                <input type='checkbox' name='anotherTest' /><label for='anotherTest'>   Another Test</label>
+              <input type='checkbox' name='anotherTest' /><label for='anotherTest'>   Another Test</label>
 
 
-                <FormGroup>
+              <FormGroup>
 
-                  <Checkbox inline name='biz' value='bix' id='55' checkked>Business Intelligence</Checkbox> <Checkbox inline>Data Mining</Checkbox>{' '}
-                  <Checkbox inline>Data Science</Checkbox>
+                <Checkbox inline name='biz' value='bix' id='55' checkked>Business Intelligence</Checkbox> <Checkbox inline>Data Mining</Checkbox>{' '}
+                <Checkbox inline>Data Science</Checkbox>
 
-                  <Checkbox inputRef={ref => { this.input = ref; }} inline>Test </Checkbox>
+                <Checkbox inputRef={ref => { this.input = ref; }} inline>Test </Checkbox>
 
-                  <Checkbox value='true' inline >Test </Checkbox>
+                <Checkbox value='true' inline >Test </Checkbox>
 
-                </FormGroup>
-
-
-              </Panel.Body>
-            </Panel.Collapse>
-          </Panel>
+              </FormGroup>
 
 
-        </form>
-        <Tabs />
+            </Panel.Body>
+          </Panel.Collapse>
+        </Panel>
 
-      </div>
-    );
-  }
+
+      </form>
+      <Tabs />
+
+    </div>
+  );
+}
 }
 
 export default SearchContainer;

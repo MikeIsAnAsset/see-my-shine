@@ -7,6 +7,7 @@ import Errors from './Errors';
 import ReactDOM from 'react-dom';
 import ValidateAfter from './ValidateAfter';
 import ValidateOnFly from './ValidateOnFly';
+import LoggedInBridge from './LoggedInBridge';
 // import Header from '../Header/Header';
 // import AboutUs from '../AboutUs/AboutUs';
 
@@ -39,6 +40,13 @@ class SignUp extends Component {
         }
     }
 
+
+
+
+
+
+
+    
     clearPasswords = (passwords) => {
         this.setState({
             password: this.props.password,
@@ -138,6 +146,7 @@ class SignUp extends Component {
                 <br />
                 <br />
                 <br />
+                {/* <LoggedInBridge loggedInUser setloggedInUser/> */}
                 <form onSubmit={this.signUpSubmitHandler.bind(this)} class="container" style={{ marginTop: "150" }}>
 
                     {errors.map(error => (<p key={error}>Error: {error}</p>))}
